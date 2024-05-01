@@ -1,0 +1,39 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+{% block form_top %}
+    {{ block.super }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var canLoginCheckbox = $('.field-can_login input[type="checkbox"]');
+            var canComputeCheckbox = $('.field-can_compute input[type="checkbox"]');
+
+            function toggleCanComputeCheckbox() {
+                if (canLoginCheckbox.is(':checked')) {
+                    canComputeCheckbox.prop('disabled', false);
+                } else {
+                    canComputeCheckbox.prop('disabled', true);
+                    canComputeCheckbox.prop('checked', false);
+                }
+            }
+
+            canLoginCheckbox.change(toggleCanComputeCheckbox);
+
+            toggleCanComputeCheckbox();
+
+            // Unfortunately, Django does not provide an easy way to hide the history button.
+            // So, we will just do this with JS.
+            document.getElementsByClassName('historylink')[0].style.visibility = 'hidden';
+        });
+    </script>
+{% endblock %}
+
+{% block object-tools-items %}
+    {{ block.super }}
+    <li>
+        <a href="{% url 'admin:ocr_upload_changelist' %}?user={{ original.pk }}" class="historylink">Uploads History</a>
+    </li>
+    <li>
+        <a href="{% url 'admin:auth_user_password_change' original.pk %}" class="historylink">Change Password</a>
+    </li>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "admin/change_list.html" %}
+
+{% block result_list %}
+    {% if request.GET %}
+        <div class="applied-filters">
+            <h3>Applied Filters:</h3>
+            <ul>
+                {% for key, value in request.GET.items %}
+                    {% for fn_key_value_pair in filter_names %}
+                        {% if key == fn_key_value_pair.0 %}
+                            {{fn_key_value_pair.1}}:
+
+                            {% for fv_key_value_pair in filter_values %}
+                                {% if value == fv_key_value_pair.0 %}
+                                    {{fv_key_value_pair.1}}
+                                {% endif %}
+                            {% endfor %}
+
+                            <br/>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {{ block.super }}
+{% endblock %}

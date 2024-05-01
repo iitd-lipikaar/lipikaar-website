@@ -1,0 +1,8 @@
+0 = Queued Initial
+1 = Partially Processed
+2 = Processing Page
+3 = Processing Page and Bbox
+4 = 
+5 = Processing Completed
+6 = Processing Error
+7 = Cancelled
